@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{%  load static %}
+<html lang="en">
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            h1 {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 600%;
+            }
+
+            h2 {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 400%;
+            }
+        </style>
+    </head>
+    <div class="container-fluid text-center">
+        <h1 class="text-center strong" style="height: 100px;">Добро пожаловать в магазин!</h1><br>
+        <h2 class="text-center">Здесь вы можете обменивать тикеты для того, что бы приобретать товары.</h2><br>
+    </div>
+    <br>
+
+    <div>
+        <style>
+            .btn {
+                display: inline-block; /* Строчно-блочный элемент */
+                background: #8C959D; /* Серый цвет фона */
+                color: #fff; /* Белый цвет текста */
+                padding: 1rem 1.5rem; /* Поля вокруг текста */
+                text-decoration: none; /* Убираем подчёркивание */
+                border-radius: 3px; /* Скругляем уголки */
+                margin-left: 300px;
+            }
+        </style>
+        <a href="{#  #}" class="btn">Зарегистрироваться</a>
+        <a href="{#  #}" class="btn">Войти</a>
+        <a href="{% url 'list_prod' %}" class="btn">Товары</a>
+
+    </div>
+
+    <style>
+        .fig {
+            text-align: center;
+        }
+    </style>
+    <p class="fig"><img src="{% static 'img/images.jpg' %}" width="1000px"></p>
+
+{% endblock %}
