@@ -8,8 +8,8 @@ def base_page(request):
     return render(request, "main.html")
 
 
-def log_in(request):
-    pass
+def second_page(request):
+    return render(request, "page2.html")
 
 
 def sign_in(request):

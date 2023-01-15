@@ -22,7 +22,7 @@
     </div>
     <br>
 
-    <div>
+    <div class="container">
         <style>
             .btn {
                 display: inline-block; /* Строчно-блочный элемент */
@@ -31,12 +31,12 @@
                 padding: 1rem 1.5rem; /* Поля вокруг текста */
                 text-decoration: none; /* Убираем подчёркивание */
                 border-radius: 3px; /* Скругляем уголки */
-                margin-left: 300px;
+                margin-left: 200px;
             }
         </style>
         <a href="{#  #}" class="btn">Зарегистрироваться</a>
-        <a href="{#  #}" class="btn">Войти</a>
-        <a href="{% url 'list_prod' %}" class="btn">Товары</a>
+        <a href="{% url "login" %}" class="btn">Войти</a>
+        <a href="{% url "list_prod" %}" class="btn">Товары</a>
 
     </div>
 
