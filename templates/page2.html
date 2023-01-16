@@ -1,10 +1,43 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{%  load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HI. You logged in successfully</title>
-</head>
-<body>
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            h1 {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 500%;
+            }
 
-</body>
-</html>
+            h2 {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 300%;
+            }
+        </style>
+    </head>
+    <div class="container-fluid text-center">
+        <h1 class="text-center strong" style="height: 100px;">Добро пожаловать в магазин, {{ user.username }}!</h1><br>
+        <h2 class="text-center">Здесь вы можете обменивать тикеты для того, что бы приобретать товары.</h2><br>
+    </div>
+    <br>
+
+    <div class="container">
+        <style>
+            .btn {
+                display: inline-block; /* Строчно-блочный элемент */
+                background: #8C959D; /* Серый цвет фона */
+                color: #fff; /* Белый цвет текста */
+                padding: 1rem 1.5rem; /* Поля вокруг текста */
+                text-decoration: none; /* Убираем подчёркивание */
+                border-radius: 3px; /* Скругляем уголки */
+                margin-left: 200px;
+            }
+        </style>
+         <a href="{% url "list_prod" %}" class="btn">Товары</a>
+        <a href="{% url "create-order" %}" class="btn">Купить</a>
+        <a href="{#  #}" class="btn">Профиль</a>
+        <a href="{#  #}" class="btn">Тикет</a>
+
+    </div>
+{%  endblock %}

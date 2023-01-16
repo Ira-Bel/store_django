@@ -1,6 +1,6 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Products(models.Model):
@@ -15,4 +15,11 @@ class Products(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
+
+class Orders(models.Model):
+    count = models.IntegerField(20)
+    order_sum = models.IntegerField(20)
+    order_datetime = models.DateTimeField(default=datetime.now())
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Products, on_delete=models.SET_NULL, null=True)
 

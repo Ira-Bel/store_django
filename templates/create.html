@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Создайте заказ.{% endblock %}</h1>
+
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+
+        <label for="title">Product id</label>
+
+        <label>
+        <input id="product" type="number" name="id_product" aria-describedby="invalid-id"
+               placeholder="product id" class="form-control {% if id_title == "" %}is-invalid{% endif %}"
+               value="{{ product }}">
+        </label>{{ id_product }}
+
+        {% if id_product == "" %}
+            <div id="invalid-id" class="invalid-feedback">
+              Укажите id товара!
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="count">Count</label>
+
+        <label>
+            <input type="number" name="count" placeholder="product count" aria-describedby="invalid-count"
+                   class="form-control {% if count == "" %}is-invalid{% endif %}">
+        </label>{{ count }}
+        {% if count == "" %}
+            <div id="invalid-count" class="invalid-feedback">
+            Укажите количество!
+            </div>
+        {% elif count > Products.count %}
+             <div id="invalid-count" class="invalid-feedback">
+            Такого количества товара нет в магазине, пожалуйста, укажите правильное количество товара!
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+{% endblock %}
