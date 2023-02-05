@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+<html lang="en">
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    {% block title %} Заказы: {% endblock %}
+        <style >
+            table {
+                width: 100%; /* Ширина таблицы */
+                background: white; /* Цвет фона таблицы */
+                color: white; /* Цвет текста */
+                border-spacing: 1px; /* Расстояние между ячейками */
+            }
+
+            td, th {
+                background: grey; /* Цвет фона ячеек */
+                padding: 5px; /* Поля вокруг текста */
+            }
+        </style>
+        </head>
+        <body>
+        <table style="width: 50%"
+               class="table table-primary table-striped table-bordered table-sm table-hover shadow-lg p-3 mb-5 bg-body rounded">
+            <thead>
+            <tr style="position: center">
+                <th scope="col">id</th>
+                <th scope="col">order_count</th>
+                <th scope="col">order_sum</th>
+                <th scope="col">product</th>
+                <th scope="col">user</th>
+                <th scope="col">time</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for elem in created_order %}
+
+                <tr class="table table-success table-active">
+                    <td> {{ elem.id }}</td>
+                    <td>{{ elem.order_count }}</td>
+                    <td> {{ elem.order_sum }}</td>
+                    <td> {{ elem.product_id }} </td>
+                    <td> {{ elem.user_id }} </td>
+                    <td> {{ elem.order_datetime }} </td>
+                </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+        </body>
+        </html>
+    {% endblock %}

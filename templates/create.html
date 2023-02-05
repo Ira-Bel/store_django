@@ -1,53 +1,33 @@
 {% extends 'base.html' %}
-
+{% load store_tags %}
+<html lang="en">
 {% block content %}
-<h1>{% block title %} Создайте заказ.{% endblock %}</h1>
+<head>
+    <meta charset="UTF-8">
+    {% block title %}Сделайте ваш заказ.{% endblock %}
 
-
-<form method="post">
+<main class="form-signin w-100 m-auto">
+  <form  method="post">
     {% csrf_token %}
-    <div class="form-group">
-
-        <label for="title">Product id</label>
-
-        <label>
-        <input id="product" type="number" name="id_product" aria-describedby="invalid-id"
-               placeholder="product id" class="form-control {% if id_title == "" %}is-invalid{% endif %}"
-               value="{{ product }}">
-        </label>{{ id_product }}
-
-        {% if id_product == "" %}
-            <div id="invalid-id" class="invalid-feedback">
-              Укажите id товара!
-            </div>
-        {% endif %}
-
-    </div>
 
     <div class="form-group">
-
-        <label for="count">Count</label>
-
-        <label>
-            <input type="number" name="count" placeholder="product count" aria-describedby="invalid-count"
-                   class="form-control {% if count == "" %}is-invalid{% endif %}">
-        </label>{{ count }}
-        {% if count == "" %}
-            <div id="invalid-count" class="invalid-feedback">
-            Укажите количество!
-            </div>
-        {% elif count > Products.count %}
-             <div id="invalid-count" class="invalid-feedback">
-            Такого количества товара нет в магазине, пожалуйста, укажите правильное количество товара!
-            </div>
-
-        {% endif %}
-
+        <label for="prod">Введите id товара</label><br>
+        <input type="number" name="prod_id" class="form-control" size="100" id="prod" min="1" max="20"  required>
+    </div>
+     <div class="form-group">
+        <label for="count">Введите количество товара</label>
+      <input type="number" name="amount" class="form-control"
+              id="count" min="1"  value="0" required >
+    </div>
+       <div class="form-group">
+        <label for="ticket">Введите ваш тикет</label><br>
+        <input type="text" name="ticket" class="form-control" size="100" id="ticket"  min="36" max="36"  required>
     </div>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+      <div class="form-group">
+         <button class="w-100 btn btn-lg btn-primary" type="submit">Upload</button>
+      </div>
+  </form>
+</main>
 
-</form>
 {% endblock %}
