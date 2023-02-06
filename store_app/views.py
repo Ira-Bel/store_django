@@ -33,17 +33,20 @@ class CreateOrder(View):
         return render(request, "create.html")
 
     def post(self, request):
+        id_user = request.user
         prod_id = request.POST.get("prod_id")
         product = Product.objects.get(id=prod_id)
         order_count = request.POST.get("amount")
-        ticket = request.POST.get("ticket")
+        id_ticket = request.POST.get("id_ticket")
+        ticket = Ticket.objects.get(id=id_ticket)
         a = Product.objects.get(id=prod_id).cost
+        b = Product.objects.get(id=prod_id).count
         if int(order_count) <= int(Product.objects.get(id=prod_id).count):
             points = 0
             if product and order_count and ticket:
                 points += 20
                 order_points = (int(order_count) * int(a))
-                if points >= order_points:
+                if points >= order_points and int(b) >= int(order_count):
                     order = Order(
                         product=product,
                         user=request.user,
@@ -51,6 +54,12 @@ class CreateOrder(View):
                         order_sum=order_points,
                         )
                     order.save()
+                    ticket.user_id = id_user
+                    ticket.available = False
+                    ticket.save(update_fields=["user_id", "available"])
+                    product.count = int(b) - int(order_count)
+                    product.save(update_fields=["count"])
+                    points -= int(order_points)
                     return redirect("profile")
         return render(request, "create.html", {"order_count": order_count})
 
