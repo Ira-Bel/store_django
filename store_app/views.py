@@ -30,20 +30,19 @@ class ShowAllProducts(View):
 class CreateOrder(View):
 
     def get(self, request):
-        return render(request, "create.html")
+        list_prod = Product.objects.all()
+        return render(request, "order.html", {"list_prod": list_prod})
 
     def post(self, request):
         id_user = request.user
         prod_id = request.POST.get("prod_id")
         product = Product.objects.get(id=prod_id)
         order_count = request.POST.get("amount")
-        id_ticket = request.POST.get("id_ticket")
-        ticket = Ticket.objects.get(id=id_ticket)
         a = Product.objects.get(id=prod_id).cost
         b = Product.objects.get(id=prod_id).count
         if int(order_count) <= int(Product.objects.get(id=prod_id).count):
             points = 0
-            if product and order_count and ticket:
+            if product and order_count:
                 points += 20
                 order_points = (int(order_count) * int(a))
                 if points >= order_points and int(b) >= int(order_count):
@@ -54,14 +53,11 @@ class CreateOrder(View):
                         order_sum=order_points,
                         )
                     order.save()
-                    ticket.user_id = id_user
-                    ticket.available = False
-                    ticket.save(update_fields=["user_id", "available"])
                     product.count = int(b) - int(order_count)
                     product.save(update_fields=["count"])
                     points -= int(order_points)
                     return redirect("profile")
-        return render(request, "create.html", {"order_count": order_count})
+        return render(request, "order.html", {"order_count": order_count})
 
 
 class ShowOrder(View):
@@ -79,6 +75,17 @@ class Profile(View):
         user_order = Order.objects.filter(user=user)
         return render(request, "profile.html", {"user_order": user_order})
 
+    def post(self, request):
+        user = request.user
+        ticket = request.Post.get("id_ticket")
+        ticket_id = request.objects.get(id=ticket)
+        points = 0
+        if ticket_id.ticket.available:
+            ticket.user_id = user
+            ticket.available = False
+            ticket.save(update_fields=["user_id", "available"])
+            points += 20
+            return redirect("profile")
 
 class ShowTickets(View):
 

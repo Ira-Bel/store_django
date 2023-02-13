@@ -5,8 +5,8 @@ from datetime import datetime
 
 class Product(models.Model):
     name = models.CharField(max_length=60)
-    count = models.IntegerField(20)
-    cost = models.IntegerField(20)
+    count = models.IntegerField(verbose_name="кол-во")
+    cost = models.IntegerField(verbose_name="стотмость")
 
     def __str__(self):
         return self.name
@@ -31,7 +31,7 @@ class Order(models.Model):
 class Ticket(models.Model):
     uuid = models.UUIDField(max_length=32)
     available = models.BooleanField(default=True, null=True)
-    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     @staticmethod
     def valid_ticket(input_uuid) -> bool:
