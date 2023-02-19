@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store_app.apps.StoreAppConfig',
     "rest_framework",
+    "user",
+    "ckeditor"
 ]
 
 MIDDLEWARE = [
@@ -71,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'store_django.wsgi.application'
+AUTH_USER_MODEL = 'user.User'
 
 
 # Database
@@ -126,7 +129,42 @@ STATICFILES_DIRS = [
 LOGIN_URL = "/account/login"
 LOGIN_REDIRECT_URL = '/next'
 
+STORE_URL = "/store/"
+STORE_ROOT = "store"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CKEDITOR_BASEPATH = "static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = STORE_ROOT + "/uploads"
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "Custom",
+        "toolbar_Custom": [
+            ["Bold", "Italic", "Underline"],
+            [
+                "NumberedList",
+                "BulletedList",
+                "-",
+                "Outdent",
+                "Indent",
+                "-",
+                "JustifyLeft",
+                "JustifyCenter",
+                "JustifyRight",
+                "JustifyBlock",
+            ],
+            ["Link", "Unlink"],
+            ["RemoveFormat", "Source"],
+        ],
+    }
+}
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = '6717149@gmail.ru'
+EMAIL_HOST_PASSWORD = '1111'

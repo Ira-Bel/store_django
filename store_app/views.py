@@ -5,18 +5,12 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect, get_object_or_404
 
 
-
-
 def base_page(request):
     return render(request, "main.html")
 
 
 def second_page(request):
     return render(request, "page2.html")
-
-
-def sign_in(request):
-    pass
 
 
 class ShowAllProducts(View):
@@ -31,33 +25,33 @@ class CreateOrder(View):
 
     def get(self, request):
         list_prod = Product.objects.all()
-        return render(request, "order.html", {"list_prod": list_prod})
+        return render(request, "create.html", {"list_prod": list_prod})
 
     def post(self, request):
-        id_user = request.user
-        prod_id = request.POST.get("prod_id")
-        product = Product.objects.get(id=prod_id)
+        user_id = request.user
+        product_id = request.POST.get("product")
+        product = Product.objects.get(id=product_id).id
+        prod = Product.objects.get(id=product_id)
         order_count = request.POST.get("amount")
-        a = Product.objects.get(id=prod_id).cost
-        b = Product.objects.get(id=prod_id).count
-        if int(order_count) <= int(Product.objects.get(id=prod_id).count):
-            points = 0
-            if product and order_count:
-                points += 20
+        a = Product.objects.get(id=product_id).cost
+        b = Product.objects.get(id=product_id).count
+        if int(order_count) <= int(b):
+            if order_count:
                 order_points = (int(order_count) * int(a))
-                if points >= order_points and int(b) >= int(order_count):
+                if user_id.points >= order_points and int(b) >= int(order_count):
                     order = Order(
-                        product=product,
+                        product_id=product,
                         user=request.user,
                         order_count=order_count,
                         order_sum=order_points,
                         )
                     order.save()
-                    product.count = int(b) - int(order_count)
-                    product.save(update_fields=["count"])
-                    points -= int(order_points)
+                    prod.count -= int(order_count)
+                    prod.save(update_fields=["count"])
+                    user_id.points -= int(order_points)
+                    user_id.save(update_fields=["points"])
                     return redirect("profile")
-        return render(request, "order.html", {"order_count": order_count})
+        return render(request, "create.html", {"order_count": order_count})
 
 
 class ShowOrder(View):
@@ -77,15 +71,16 @@ class Profile(View):
 
     def post(self, request):
         user = request.user
-        ticket = request.Post.get("id_ticket")
-        ticket_id = request.objects.get(id=ticket)
-        points = 0
-        if ticket_id.ticket.available:
-            ticket.user_id = user
+        ticket_id = request.POST.get("id_ticket")
+        ticket = Ticket.objects.get(id=ticket_id)
+        if ticket.available:
+            ticket.user_id_id = user
             ticket.available = False
-            ticket.save(update_fields=["user_id", "available"])
-            points += 20
+            ticket.save(update_fields=["user_id_id", "available"])
+            user.points += 20
+            user.save(update_fields=["points"])
             return redirect("profile")
+        return render(request, "usedticket.html")
 
 class ShowTickets(View):
 

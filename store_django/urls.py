@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+from user import views as user_views
 
 
 urlpatterns = [
@@ -22,4 +25,14 @@ urlpatterns = [
     path("api/v0/", include("store_app.api.v0.urls")),
     path("", include('store_app.urls')),
     path("account/", include("django.contrib.auth.urls")),
+    path("accounts/register", user_views.register, name="signin"),
+    path("accounts/", include("django.contrib.auth.urls")),
+
+    path('activate/<uid>/<token>/', user_views.activate, name='activate'),
+
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STORE_URL, document_root=settings.STORE_ROOT)
