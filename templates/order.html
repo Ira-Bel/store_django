@@ -40,7 +40,7 @@
                     <td> {{ product.count }}</td>
                     <td> {{ product.cost }} points</td>
                     <td>
-                        <form method="post">
+                        <form method="post" action="{% url "buy_product" product.id %}">
                             {% csrf_token %}
                             <input name="count" type="number" max="10" min="1">
                             <button type="submit" class="btn btn success">Купить</button>

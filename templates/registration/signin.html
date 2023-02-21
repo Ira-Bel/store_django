@@ -1,34 +1,18 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block extrastylesheet %}
-    <link href="{% static "css/login.css" %}" rel="stylesheet">
-{% endblock %}
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<main class="form-signin w-100 m-auto">
-  <form method="post">
-      {% csrf_token %}
-    <img class="mb-4" src="{% static 'img/login.png' %}">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <div class="container" style="max-width: 500px">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Добро пожаловать</legend>
+                {{ form | crispy }}
+            </fieldset>
+            <div class="form-group text-center py-4">
+                <button class="btn btn-outline-success" type="submit">Регистрация</button>
+            </div>
+        </form>
 
-    <div class="form-floating">
-      <input type="text" name="username" class="form-control" id="floatingInput" placeholder="User">
-      <label for="floatingInput">Username</label>
     </div>
-    <div class="form-floating">
-      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022-2023</p>
-  </form>
-</main>
-
 {% endblock %}

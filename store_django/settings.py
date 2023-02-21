@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'store_app.apps.StoreAppConfig',
     "rest_framework",
     "user",
-    "ckeditor"
+    "ckeditor",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -162,9 +164,9 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = '6717149@gmail.ru'
-EMAIL_HOST_PASSWORD = '1111'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'NewUserIra@yandex.ru'
+EMAIL_HOST_PASSWORD = 'heoesjvgjiirrmuq'

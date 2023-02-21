@@ -25,7 +25,7 @@ urlpatterns = [
     path("api/v0/", include("store_app.api.v0.urls")),
     path("", include('store_app.urls')),
     path("account/", include("django.contrib.auth.urls")),
-    path("accounts/register", user_views.register, name="signin"),
+    path("accounts/register", user_views.register, name="sign_in"),
     path("accounts/", include("django.contrib.auth.urls")),
 
     path('activate/<uid>/<token>/', user_views.activate, name='activate'),

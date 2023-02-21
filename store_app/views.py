@@ -25,33 +25,34 @@ class CreateOrder(View):
 
     def get(self, request):
         list_prod = Product.objects.all()
-        return render(request, "create.html", {"list_prod": list_prod})
+        return render(request, "order.html", {"list_prod": list_prod})
 
-    def post(self, request):
+@method_decorator(login_required, name="dispatch")
+class BuyProduct(View):
+
+    def post(self, request, product_id: int):
         user_id = request.user
-        product_id = request.POST.get("product")
-        product = Product.objects.get(id=product_id).id
-        prod = Product.objects.get(id=product_id)
-        order_count = request.POST.get("amount")
+        product = get_object_or_404(Product, id=product_id)
+        # prod = Product.objects.get(id=product_id)
+        order_count = request.POST.get("count")
         a = Product.objects.get(id=product_id).cost
         b = Product.objects.get(id=product_id).count
         if int(order_count) <= int(b):
-            if order_count:
                 order_points = (int(order_count) * int(a))
                 if user_id.points >= order_points and int(b) >= int(order_count):
                     order = Order(
-                        product_id=product,
+                        product_id=product.id,
                         user=request.user,
                         order_count=order_count,
                         order_sum=order_points,
                         )
                     order.save()
-                    prod.count -= int(order_count)
-                    prod.save(update_fields=["count"])
+                    product.count -= int(order_count)
+                    product.save(update_fields=["count"])
                     user_id.points -= int(order_points)
                     user_id.save(update_fields=["points"])
                     return redirect("profile")
-        return render(request, "create.html", {"order_count": order_count})
+        return render(request, "order.html", {"order_count": order_count})
 
 
 class ShowOrder(View):
