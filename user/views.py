@@ -33,7 +33,7 @@ def register(request):
 
             send_mail(
                 subject="Подтвердите регистрацию",
-                from_email="NewUserIra@yandex.ru",
+                from_email="address@yandex.ru",
                 recipient_list=[user.email],
                 message=create_message(user)
             )
